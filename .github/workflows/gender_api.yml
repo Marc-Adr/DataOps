@@ -22,7 +22,7 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Build docker
-        working-directory: api
+        working-directory: day2_api
         run: docker build -t gender-api-marc .
 
       - name: Tag the image
