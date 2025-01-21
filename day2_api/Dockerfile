@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Command to run the app
-CMD ["bash", "-c", "flask --app api/api --debug run --host 0.0.0.0"]
+CMD ["bash", "-c", "flask --app api/api --debug run --host 0.0.0.0 -p 8080"]
