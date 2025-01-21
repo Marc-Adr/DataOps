@@ -36,3 +36,23 @@ jobs:
 
       - name: Push to GCP registry
         run: docker push europe-docker.pkg.dev/ensai-2025/test-marc/gender-api-marc
+
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
+
+      steps:
+      - name: Auth GCP gcloud
+        uses: 'google-github-actions/auth@v1'
+        with:
+            credentials_json: ${{ secrets.CREDENTIALS_KEY }}
+
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          service: marc-gernder-api
+          image: europe-docker.pkg.dev/ensai-2025/test-marc/gender-api-marc
+
+      - name: 'Use output'
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
+      
