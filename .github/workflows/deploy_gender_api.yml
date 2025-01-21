@@ -26,16 +26,16 @@ jobs:
         run: docker build -t gender-api-marc .
 
       - name: Tag the image
-        run: docker tag gender-api-marc europe-docker.pkg.dev/ensai-2025/test-marc/gender-api-marc
+        run: docker tag gender-api-marc europe-docker.pkg.dev/ensai-2025/testd-marc/gender-api-marc
 
       - name: Authenticate to GCP registry
         run: gcloud auth configure-docker europe-docker.pkg.dev
 
       - name: Create the repo
-        run: gcloud artifacts repositories create test-marc --repository-format docker --location europe
+        run: gcloud artifacts repositories create testd-marc --repository-format docker --location europe
 
       - name: Push to GCP registry
-        run: docker push europe-docker.pkg.dev/ensai-2025/test-marc/gender-api-marc
+        run: docker push europe-docker.pkg.dev/ensai-2025/testd-marc/gender-api-marc
 
     deploy:
       runs-on: ubuntu-latest
@@ -50,8 +50,8 @@ jobs:
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
-          service: marc-gernder-api
-          image: europe-docker.pkg.dev/ensai-2025/test-marc/gender-api-marc
+          service: marc-gender-api
+          image: europe-docker.pkg.dev/ensai-2025/testd-marc/gender-api-marc
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'
